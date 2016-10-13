@@ -1,11 +1,3 @@
-//
-//  LiveViewViewController.m
-//  CamFiDemo
-//
-//  Created by Justin on 16/5/29.
-//  Copyright © 2016年 CamFi. All rights reserved.
-//
-
 #import "CamFiAPI.h"
 #import "CamFiServerInfo.h"
 #import "LiveViewViewController.h"
