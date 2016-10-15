@@ -19,16 +19,22 @@ class ShootProof {
     convenience init() {
         self.init(accessToken: "ddbc353912ccf6b1dadbeea60da166987e3a9735")
     }
+    
+    func viewUrl(eventId: String, albumId: String) -> String {
+        return "https://iconicbooth.shootproof.com/gallery/\(eventId)/album/\(albumId)"
+    }
 
-    func uploadPhoto(photo: UIImage, eventId: String, phoneNumber: String) {
-        let request = createRequest(eventId: eventId, albumId: "", image: photo)
+    typealias DidUploadPhoto = (_ error: Error?) -> ()
+    
+    func uploadPhoto(photo: UIImage, eventId: String, phoneNumber: String, whenDone: @escaping DidUploadPhoto) {
+        let request = createRequest(eventId: eventId, albumId: phoneNumber, image: photo)
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if error != nil {
                 // handle error here
                 print(error)
 
-                return
+                whenDone(error)
             }
 
             // if response was JSON, then parse it
@@ -36,18 +42,21 @@ class ShootProof {
             do {
                 if let responseDictionary = try JSONSerialization.jsonObject(with: data!, options: []) as? NSDictionary {
                     print("success == \(responseDictionary)")
-                    
+
+                    whenDone(nil)
                     // note, if you want to update the UI, make sure to dispatch that to the main queue, e.g.:
                     //
                     // dispatch_async(dispatch_get_main_queue()) {
                     //     // update your UI and model objects here
                     // }
                 }
-            } catch {
+            } catch let error {
                 print(error)
-                
+
                 let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
                 print("responseString = \(responseString)")
+                
+                whenDone(error)
             }
         }
         
@@ -76,17 +85,121 @@ class ShootProof {
             task.resume()
         }
     }
+
+    typealias DidGetAlbum = (_ albumId: String?, _ error: Error?) -> ()
+
+    // https://api.shootproof.com/v2?access_token=ddbc353912ccf6b1dadbeea60da166987e3a9735&event_id=3319727&method=sp.album.get_list
+    func findAlbum(name: String, eventId: String, whenDone: @escaping DidGetAlbum) {
+        let url = makeURL(method: "sp.album.get_list", extraParameters: [
+            "event_id": eventId
+            ])
+        
+        let request = URLRequest(url: url)
+        sendRequest(request: request) { (dict, error) in
+            guard let albums = dict?["albums"] as? [[String:AnyObject]] else {
+                // error
+                return
+            }
+
+            let matchingAlbum = albums.first { name == ($0["name"] as! String) }
+
+            if let album = matchingAlbum {
+                whenDone(album["id"] as? String, nil)
+            }
+            else {
+                whenDone(nil, nil)
+            }
+        }
+    }
+
+    func createAlbum(name: String, eventId: String, whenDone: @escaping DidGetAlbum) {
+        let url = makeURL(method: "sp.album.create", extraParameters: [
+            "event_id": eventId,
+            "album_name": name
+        ])
+
+        let request = URLRequest(url: url)
+        sendRequest(request: request) { (dict, error) in
+            guard error == nil, let dict = dict else {
+                // error
+                return
+            }
+
+            if let id = dict["album"]?["id"] as? String {
+                whenDone(id, nil)
+            }
+            else {
+                // error
+            }
+        }
+    }
+
+    func findOrCreateAlbum(name: String, eventId: String, whenDone: @escaping DidGetAlbum) {
+        findAlbum(name: name, eventId: eventId) { (albumId, error) in
+            if let albumId = albumId {
+                whenDone(albumId, nil)
+            }
+            else {
+                self.createAlbum(name: name, eventId: eventId, whenDone: whenDone)
+            }
+        }
+    }
     
-    func makeURL() -> URL {
+    typealias RequestCompleted = (_ response: [String:AnyObject]?, _ error: Error?) -> ()
+
+    func sendRequest(request: URLRequest, whenCompleted: @escaping RequestCompleted) {
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+            if error != nil {
+                return whenCompleted(nil, error)
+            }
+            
+            if let data = data, let response = response as? HTTPURLResponse {
+                guard response.statusCode == 200 else {
+                    // error
+                    return
+                }
+
+                do {
+                    let dict = try JSONSerialization.jsonObject(with: data, options: []) as? [String:AnyObject]
+
+                    whenCompleted(dict, nil)
+                }
+                catch let error {
+                    // error
+                }
+            }
+        })
+        
+        task.resume()
+    }
+
+    func makeURL(method: String, extraParameters: [String: String]) -> URL {
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-        components.queryItems  = [
-            URLQueryItem(name: "method", value: "sp.photo.upload"),
-            URLQueryItem(name: "access_token", value: self.accessToken)
+        
+        let baseParameters: [String: String] = [
+            "method": method,
+            "access_token": self.accessToken
         ]
+
+        var allParameters = baseParameters
+        for (key, value) in extraParameters {
+            allParameters[key] = value
+        }
+
+        var queryItems: [URLQueryItem] = []
+        for (key, value) in allParameters {
+            queryItems.append(URLQueryItem(name: key, value: value))
+        }
+
+        components.queryItems = queryItems
 
         return components.url!
     }
-    
+
+    func makeURL(method: String) -> URL {
+        return makeURL(method: method, extraParameters: [:])
+    }
+
     // MARK: Private
     
     // http://stackoverflow.com/questions/26162616/upload-image-with-parameters-in-swift
@@ -102,12 +215,13 @@ class ShootProof {
     func createRequest(eventId: String, albumId: String, image: UIImage) -> URLRequest {
         let params = [
             "event_id": eventId,
+            "album_id": albumId,
             "watermark_id": "no"
         ]
         
         let boundary = generateBoundaryString()
 
-        var request = URLRequest(url: makeURL())
+        var request = URLRequest(url: makeURL(method: "sp.photo.upload"))
         request.httpMethod = "POST"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.httpBody = createBodyWithParameters(
