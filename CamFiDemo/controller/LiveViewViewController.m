@@ -48,7 +48,7 @@ static BOOL soi = NO;
 {
     [super viewDidAppear:animated];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
     {
         [self takePictureWithCountdown:5.0 onCompletion:^
         {
@@ -56,11 +56,16 @@ static BOOL soi = NO;
             {
                 [self takePictureWithCountdown:3.0 onCompletion:^
                 {
-                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                    PreviewViewController *vc = (PreviewViewController *)
-                    [storyboard instantiateViewControllerWithIdentifier:@"Preview"];
-
-                    [self showViewController:vc sender:nil];
+                    
+                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC));
+                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                        PreviewViewController *vc = (PreviewViewController *)
+                        [storyboard instantiateViewControllerWithIdentifier:@"Preview"];
+                        
+                        [self showViewController:vc sender:nil];
+                    });
+                    
                 }];
             });
         }];

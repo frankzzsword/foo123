@@ -57,7 +57,7 @@ class PreviewViewController: UIViewController {
 
   @IBAction func tappedSendButton(sender: UIButton) {
         DispatchQueue.global().async {
-            let eventId = "3319335"
+            let eventId = "3337931"
             self.api.findOrCreateAlbum(name: self.phoneNumberfield.text!, eventId: eventId, whenDone: { (albumId, error) in
                 guard error == nil else {
                     // error
