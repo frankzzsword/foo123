@@ -20,9 +20,15 @@ class PreviewViewController: UIViewController {
     var images: [UIImage?]? = nil
 
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        loadImages()
+    }
+    
+    func loadImages() {
         camera.last(n: 2) { (images) in
             self.images = images
-
+            
             DispatchQueue.main.async {
                 self.refreshView()
             }
