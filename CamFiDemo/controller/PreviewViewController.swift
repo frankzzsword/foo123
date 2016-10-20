@@ -15,7 +15,7 @@ class PreviewViewController: UIViewController {
     @IBOutlet var image1: UIImageView?
     @IBOutlet var image2: UIImageView?
     @IBOutlet var sendSMS: UIButton?
-    @IBOutlet weak var phoneNumberfield: UITextField!
+    @IBOutlet weak var phoneNumberField: UITextField!
     
     var images: [UIImage?]? = nil
 
@@ -57,7 +57,8 @@ class PreviewViewController: UIViewController {
         return true
         
     }
-    func animateViewMoving (up:Bool, moveValue :CGFloat){
+    
+    func animateViewMoving (up:Bool, moveValue :CGFloat) {
         
         var movementDuration:TimeInterval = 0.3
         var movement:CGFloat = ( up ? -moveValue : moveValue)
@@ -96,7 +97,7 @@ class PreviewViewController: UIViewController {
   @IBAction func tappedSendButton(sender: UIButton) {
         DispatchQueue.global().async {
             let eventId = "3337931"
-            self.api.findOrCreateAlbum(name: self.phoneNumberfield.text!, eventId: eventId, whenDone: { (albumId, error) in
+            self.api.findOrCreateAlbum(name: self.phoneNumberField.text!, eventId: eventId, whenDone: { (albumId, error) in
                 guard error == nil else {
                     // error
                     return
@@ -112,7 +113,7 @@ class PreviewViewController: UIViewController {
                 self.sendTextMessage(url: url)
 
                 // 2. upload photos
-                self.uploadPhotos(phoneNumber: self.phoneNumberfield.text!, eventId: eventId, whenDone: { (error) in
+                self.uploadPhotos(phoneNumber: self.phoneNumberField.text!, eventId: eventId, whenDone: { (error) in
                     guard error == nil else {
                         // error
                         return
