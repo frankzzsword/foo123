@@ -166,6 +166,7 @@ class ShootProof {
                 }
                 catch let error {
                     // error
+                    print("got an error: \(error)")
                 }
             }
         })
