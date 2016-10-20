@@ -30,6 +30,44 @@ class PreviewViewController: UIViewController {
         }
     }
 
+    func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        
+        self.view.endEditing(true)
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        
+        
+        
+        textField.keyboardType = UIKeyboardType.emailAddress
+        self.animateViewMoving(up: true, moveValue: 50)
+        
+    }
+    func textFieldDidEndEditing(textField: UITextField) {
+        
+        self.animateViewMoving(up: false, moveValue: 50)
+        
+        
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        return true
+        
+    }
+    func animateViewMoving (up:Bool, moveValue :CGFloat){
+        
+        var movementDuration:TimeInterval = 0.3
+        var movement:CGFloat = ( up ? -moveValue : moveValue)
+        UIView.beginAnimations( "animateView", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(movementDuration )
+        self.view.frame = self.view.frame.offsetBy(dx: 0,  dy: movement)
+        UIView.commitAnimations()
+    }
+    
     func refreshView() {
         
         guard let images = images, images.count >= 2 else { return }
