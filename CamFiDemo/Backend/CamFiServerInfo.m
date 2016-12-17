@@ -51,6 +51,11 @@
 }
 
 /* CamFi live url string */
+- (NSString*) camFiNetworkModeURLStr {
+    return [NSString stringWithFormat:@"%@%@", [self serverURLStr], @"/networkmode"];
+}
+
+/* CamFi live url string */
 - (NSString*) camFiLiveURLStr {
     return [NSString stringWithFormat:@"%@%@", [self serverURLStr], @"/live"];
 }

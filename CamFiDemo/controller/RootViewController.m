@@ -9,7 +9,7 @@
 #import "AFHTTPRequestOperation.h"
 #import "CamFiAPI.h"
 #import "CameraMedia.h"
-#import "LiveViewViewController.h"
+#import "LiveViewController.h"
 #import "MWPhotoBrowser.h"
 #import "RootViewController.h"
 #import "ShootViewController.h"
@@ -140,7 +140,7 @@
         }
         else if ([featureStr isEqualToString:FEATURE_LIVE_VIEW]) {
 
-            viewController = [[LiveViewViewController alloc] init];
+            viewController = [[LiveViewController alloc] init];
         }
         else if ([featureStr isEqualToString:FEATURE_AUTO_VIEW]) {
             

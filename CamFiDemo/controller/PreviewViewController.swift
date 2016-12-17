@@ -20,17 +20,17 @@ class PreviewViewController: UIViewController {
     var images: [UIImage?]? = nil
 
     override func viewDidAppear(_ animated: Bool) {
+        
         super.viewDidAppear(animated)
-
         loadImages()
     }
     
     func loadImages() {
-        camera.last(n: 2) { (images) in
-            self.images = images
+        camera.last(n: 2) { [weak self] (images) in
+            self?.images = images
             
             DispatchQueue.main.async {
-                self.refreshView()
+                self?.refreshView()
             }
         }
     }
@@ -107,7 +107,7 @@ class PreviewViewController: UIViewController {
                 self.sendTextMessage(url: url)
 
                 // 2. upload photos
-                self.uploadPhotos(phoneNumber: self.phoneNumberField.text!, eventId: eventId, whenDone: { (error) in
+                self.uploadPhotos(phoneNumber: albumId, eventId: eventId, whenDone: { (error) in
                     guard error == nil else {
                         // error
                         return
@@ -127,7 +127,7 @@ class PreviewViewController: UIViewController {
         let twilioSID = "ACedf09758de551ea53b70cc71cf41b19a"
         let twilioSecret = "860280cddb0f86ce5d165227c50b08b4"
         let fromNumber = "+14152129285"
-        let toNumber = "+14086633063"
+        let toNumber = "+1\(phoneNumberField.text!)"
         let message = "Your event photos are available at \(url)"
         
         // Build the request

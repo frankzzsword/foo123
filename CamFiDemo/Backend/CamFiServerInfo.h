@@ -26,6 +26,9 @@
 /* Event url string */
 - (NSString*) eventURLString;
 
+/* CamFi network mode url */
+- (NSString*) camFiNetworkModeURLStr;
+
 /* CamFi live url string */
 - (NSString*) camFiLiveURLStr;
 

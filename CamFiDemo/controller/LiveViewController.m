@@ -1,6 +1,6 @@
 #import "CamFiAPI.h"
 #import "CamFiServerInfo.h"
-#import "LiveViewViewController.h"
+#import "LiveViewController.h"
 #import "Utils.h"
 #import "CamFiDemo-Swift.h"
 
@@ -10,12 +10,14 @@
 static NSInteger skipCount = -1;
 static BOOL soi = NO;
 
-@interface LiveViewViewController ()
+@interface LiveViewController ()
 
 @property (nonatomic, strong) NSMutableURLRequest* photoStreamURLRequest;
 @property (nonatomic, strong) NSURLConnection* photoStreamURLConnection;
 @property (nonatomic, strong) NSMutableData* photoData;
 @property (nonatomic, assign) NSInteger metaDataStartIndex;
+@property (nonatomic, strong) UIView *whiteScreen;
+
 
 @property (weak, nonatomic) IBOutlet UIImageView* previewImageView;
 @property (weak, nonatomic) IBOutlet UILabel *countdownLabel;
@@ -25,7 +27,7 @@ static BOOL soi = NO;
 @end
 
 
-@implementation LiveViewViewController
+@implementation LiveViewController
 
 - (void)viewDidLoad
 {
@@ -33,7 +35,10 @@ static BOOL soi = NO;
     // Do any additional setup after loading the view from its nib.
     _previewImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Start/Stop" style:UIBarButtonItemStylePlain target:self action:@selector(toggleBarButtonItemPressed:)];
-
+    self.whiteScreen = [[UIView alloc] initWithFrame:self.view.frame];
+    self.whiteScreen.layer.opacity = 0.0f;
+    self.whiteScreen.layer.backgroundColor = [[UIColor whiteColor] CGColor];
+    [self.view addSubview:self.whiteScreen];
 
 }
 
@@ -48,16 +53,16 @@ static BOOL soi = NO;
 {
     [super viewDidAppear:animated];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
     {
-        [self takePictureWithCountdown:5.0 onCompletion:^
+        [self takePictureWithCountdown:3.0 onCompletion:^
         {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^
             {
                 [self takePictureWithCountdown:3.0 onCompletion:^
                 {
                     
-                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC));
+                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(7 * NSEC_PER_SEC));
                     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                         PreviewViewController *vc = (PreviewViewController *)
@@ -72,10 +77,29 @@ static BOOL soi = NO;
     });
 }
 
+
+-(void)flashScreen {
+    CAKeyframeAnimation *opacityAnimation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+    NSArray *animationValues = @[ @0.8f, @0.0f ];
+    NSArray *animationTimes = @[ @0.1f, @0.6f ];
+    id timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    NSArray *animationTimingFunctions = @[ timingFunction, timingFunction ];
+    [opacityAnimation setValues:animationValues];
+    [opacityAnimation setKeyTimes:animationTimes];
+    [opacityAnimation setTimingFunctions:animationTimingFunctions];
+    opacityAnimation.fillMode = kCAFillModeForwards;
+    opacityAnimation.removedOnCompletion = YES;
+    opacityAnimation.duration = 0.5;
+    
+    [self.whiteScreen.layer addAnimation:opacityAnimation forKey:@"animation"];
+}
+
 - (void)takePictureWithCountdown:(NSTimeInterval)seconds onCompletion:(dispatch_block_t)completion
 {
     if (seconds == 0)
     {
+        [self flashScreen];
+        self.countdownLabel.text = @"";
         NSLog(@"take a picture");
 
         [self takePicture];
@@ -87,8 +111,15 @@ static BOOL soi = NO;
     }
     else
     {
-        self.countdownLabel.text = [@(seconds) description];
+        CATransition *animation = [CATransition animation];
+        animation.duration = 0.1;
+        animation.type = kCATransitionPush;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        [_countdownLabel.layer addAnimation:animation forKey:@"changeTextTransition"];
 
+        
+        self.countdownLabel.text = [@(seconds) description];
+        
         seconds -= 1;
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^

@@ -25,6 +25,9 @@
 		245845FA1DAB2FB400E09E0E /* pic1.png in Resources */ = {isa = PBXBuildFile; fileRef = 245845F81DAB2FB400E09E0E /* pic1.png */; };
 		245845FD1DAB44F200E09E0E /* CameraImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245845FC1DAB44F200E09E0E /* CameraImages.swift */; };
 		245845FF1DAB47CF00E09E0E /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245845FE1DAB47CF00E09E0E /* PreviewViewController.swift */; };
+		247FC8871E0547CC00DD4760 /* AnimateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247FC8861E0547CC00DD4760 /* AnimateViewController.swift */; };
+		24A108341DB8B38E00D6177D /* ThankYouViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A108331DB8B38E00D6177D /* ThankYouViewController.swift */; };
+		24A108361DB8B42F00D6177D /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A108351DB8B42E00D6177D /* StartViewController.swift */; };
 		D0C07A951CFB031B00341404 /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C07A931CFB031B00341404 /* BrowserViewController.m */; };
 		D0C07A9B1CFB047B00341404 /* libDACircularProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C07A971CFB047B00341404 /* libDACircularProgress.a */; };
 		D0C07A9C1CFB047B00341404 /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C07A981CFB047B00341404 /* libMBProgressHUD.a */; };
@@ -65,8 +68,8 @@
 		D0FBE8A71CFAE46D007BD047 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FBE8A61CFAE46D007BD047 /* Constants.m */; };
 		D0FBE8AA1CFAE6C9007BD047 /* NSString+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FBE8A91CFAE6C9007BD047 /* NSString+Utils.m */; };
 		D0FBE8AD1CFAEEEF007BD047 /* AFLog.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FBE8AC1CFAEEEF007BD047 /* AFLog.m */; };
-		D0FBE8B11CFAF77E007BD047 /* LiveViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FBE8AF1CFAF77E007BD047 /* LiveViewViewController.m */; };
-		D0FBE8B21CFAF77E007BD047 /* LiveViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0FBE8B01CFAF77E007BD047 /* LiveViewViewController.xib */; };
+		D0FBE8B11CFAF77E007BD047 /* LiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FBE8AF1CFAF77E007BD047 /* LiveViewController.m */; };
+		D0FBE8B21CFAF77E007BD047 /* LiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0FBE8B01CFAF77E007BD047 /* LiveViewController.xib */; };
 		D0FBE8B51CFAFAA0007BD047 /* HUDHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FBE8B41CFAFAA0007BD047 /* HUDHelper.m */; };
 		F71A762174CDC794B25C4101 /* libPods-CamFiDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC9096F3BE5346C2762B44FC /* libPods-CamFiDemo.a */; };
 /* End PBXBuildFile section */
@@ -91,6 +94,9 @@
 		245845FB1DAB44F200E09E0E /* CamFiDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CamFiDemo-Bridging-Header.h"; sourceTree = "<group>"; };
 		245845FC1DAB44F200E09E0E /* CameraImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraImages.swift; sourceTree = "<group>"; };
 		245845FE1DAB47CF00E09E0E /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		247FC8861E0547CC00DD4760 /* AnimateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimateViewController.swift; sourceTree = "<group>"; };
+		24A108331DB8B38E00D6177D /* ThankYouViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThankYouViewController.swift; sourceTree = "<group>"; };
+		24A108351DB8B42E00D6177D /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		30DFE0A8873BC2C83FBBFBA1 /* Pods-CamFiDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CamFiDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-CamFiDemo/Pods-CamFiDemo.release.xcconfig"; sourceTree = "<group>"; };
 		C01039E83CDA5B1593E4871E /* Pods-CamFiDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CamFiDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CamFiDemo/Pods-CamFiDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		D0C07A921CFB031B00341404 /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
@@ -168,9 +174,9 @@
 		D0FBE8A91CFAE6C9007BD047 /* NSString+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utils.m"; sourceTree = "<group>"; };
 		D0FBE8AB1CFAEEEF007BD047 /* AFLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFLog.h; sourceTree = "<group>"; };
 		D0FBE8AC1CFAEEEF007BD047 /* AFLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFLog.m; sourceTree = "<group>"; };
-		D0FBE8AE1CFAF77E007BD047 /* LiveViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveViewViewController.h; sourceTree = "<group>"; };
-		D0FBE8AF1CFAF77E007BD047 /* LiveViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveViewViewController.m; sourceTree = "<group>"; };
-		D0FBE8B01CFAF77E007BD047 /* LiveViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LiveViewViewController.xib; sourceTree = "<group>"; };
+		D0FBE8AE1CFAF77E007BD047 /* LiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveViewController.h; sourceTree = "<group>"; };
+		D0FBE8AF1CFAF77E007BD047 /* LiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveViewController.m; sourceTree = "<group>"; };
+		D0FBE8B01CFAF77E007BD047 /* LiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LiveViewController.xib; sourceTree = "<group>"; };
 		D0FBE8B31CFAFAA0007BD047 /* HUDHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDHelper.h; sourceTree = "<group>"; };
 		D0FBE8B41CFAFAA0007BD047 /* HUDHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDHelper.m; sourceTree = "<group>"; };
 		DC9096F3BE5346C2762B44FC /* libPods-CamFiDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CamFiDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -303,14 +309,15 @@
 		D0FBE7B41CFADBC5007BD047 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				247FC8861E0547CC00DD4760 /* AnimateViewController.swift */,
 				D0FBE7B51CFADBE2007BD047 /* RootViewController.h */,
 				D0FBE7B61CFADBE2007BD047 /* RootViewController.m */,
 				D0FBE7BD1CFAE267007BD047 /* ShootViewController.h */,
 				D0FBE7BE1CFAE267007BD047 /* ShootViewController.m */,
 				D0FBE7BF1CFAE267007BD047 /* ShootViewController.xib */,
-				D0FBE8AE1CFAF77E007BD047 /* LiveViewViewController.h */,
-				D0FBE8AF1CFAF77E007BD047 /* LiveViewViewController.m */,
-				D0FBE8B01CFAF77E007BD047 /* LiveViewViewController.xib */,
+				D0FBE8AE1CFAF77E007BD047 /* LiveViewController.h */,
+				D0FBE8AF1CFAF77E007BD047 /* LiveViewController.m */,
+				D0FBE8B01CFAF77E007BD047 /* LiveViewController.xib */,
 				D0C07A921CFB031B00341404 /* BrowserViewController.h */,
 				D0C07A931CFB031B00341404 /* BrowserViewController.m */,
 				D0C07AA31CFC1FAF00341404 /* AutoViewViewController.h */,
@@ -319,6 +326,8 @@
 				245845FC1DAB44F200E09E0E /* CameraImages.swift */,
 				245845FB1DAB44F200E09E0E /* CamFiDemo-Bridging-Header.h */,
 				245845FE1DAB47CF00E09E0E /* PreviewViewController.swift */,
+				24A108331DB8B38E00D6177D /* ThankYouViewController.swift */,
+				24A108351DB8B42E00D6177D /* StartViewController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -521,7 +530,7 @@
 				D0C07AA71CFC1FAF00341404 /* AutoViewViewController.xib in Resources */,
 				245845FA1DAB2FB400E09E0E /* pic1.png in Resources */,
 				243530F31DAB164F00764BDE /* Compasse Thin Italic.ttf in Resources */,
-				D0FBE8B21CFAF77E007BD047 /* LiveViewViewController.xib in Resources */,
+				D0FBE8B21CFAF77E007BD047 /* LiveViewController.xib in Resources */,
 				D0FBE7C11CFAE267007BD047 /* ShootViewController.xib in Resources */,
 				243530F01DAB164F00764BDE /* Compasse Light Italic.ttf in Resources */,
 				243530F41DAB164F00764BDE /* Compasse Thin.ttf in Resources */,
@@ -617,6 +626,7 @@
 				D0FBE8A31CFAE43C007BD047 /* CamFiServerInfo.m in Sources */,
 				D0FBE79F1CFADABC007BD047 /* main.m in Sources */,
 				D0FBE8651CFAE36B007BD047 /* UIAlertView+AFNetworking.m in Sources */,
+				24A108341DB8B38E00D6177D /* ThankYouViewController.swift in Sources */,
 				245845FF1DAB47CF00E09E0E /* PreviewViewController.swift in Sources */,
 				D0FBE85B1CFAE36B007BD047 /* AFHTTPRequestOperationManager.m in Sources */,
 				D0FBE85E1CFAE36B007BD047 /* AFSecurityPolicy.m in Sources */,
@@ -625,8 +635,10 @@
 				D0FBE8AD1CFAEEEF007BD047 /* AFLog.m in Sources */,
 				D0FBE7BB1CFADC3B007BD047 /* Utils.m in Sources */,
 				D0FBE8B51CFAFAA0007BD047 /* HUDHelper.m in Sources */,
-				D0FBE8B11CFAF77E007BD047 /* LiveViewViewController.m in Sources */,
+				24A108361DB8B42F00D6177D /* StartViewController.swift in Sources */,
+				D0FBE8B11CFAF77E007BD047 /* LiveViewController.m in Sources */,
 				D0FBE85C1CFAE36B007BD047 /* AFHTTPSessionManager.m in Sources */,
+				247FC8871E0547CC00DD4760 /* AnimateViewController.swift in Sources */,
 				D0FBE8641CFAE36B007BD047 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				D0FBE8631CFAE36B007BD047 /* AFNetworkActivityIndicatorManager.m in Sources */,
 			);

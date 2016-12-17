@@ -219,6 +219,7 @@ class ShootProof {
             "album_id": albumId,
             "watermark_id": "no"
         ]
+        print("FUCK FUCK FUCK FUCK\(albumId)")
         
         let boundary = generateBoundaryString()
 

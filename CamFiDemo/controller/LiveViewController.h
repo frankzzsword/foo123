@@ -1,5 +1,5 @@
 //
-//  LiveViewViewController.h
+//  LiveViewController.h
 //  CamFiDemo
 //
 //  Created by Justin on 16/5/29.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LiveViewViewController : UIViewController
+@interface LiveViewController : UIViewController
 
 @end

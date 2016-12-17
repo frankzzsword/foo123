@@ -7,15 +7,61 @@
 //
 
 #import "AppDelegate.h"
+#import "CamFiServerInfo.h"
+#import "SDWebImageManager.h"
 
 @interface AppDelegate ()
 
 @end
 
+
 @implementation AppDelegate
+
+- (void)enableWifiBridgingWithSSID:(NSString *)ssid password:(NSString *)password encryption:(NSString *)encryption
+{
+    NSURL *serverURL = [NSURL URLWithString:CamFiServerInfo.sharedInstance.camFiNetworkModeURLStr];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:serverURL];
+    request.HTTPMethod = @"POST";
+
+    NSDictionary *body = @
+    {
+        @"mode": @"sta",
+        @"router_ssid": ssid,
+        @"password": password,
+        @"encryption": encryption
+    };
+    
+    NSError *jsonError;
+    request.HTTPBody = [NSJSONSerialization dataWithJSONObject:body options:kNilOptions error:&jsonError];
+    
+    if (jsonError != nil)
+    {
+        NSLog(@"JSON error: %@", jsonError);
+    }
+
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error)
+    {
+        NSLog(@"network mode");
+        NSLog(@"response: %@", response);
+        if (error != nil)
+        {
+            NSLog(@"error: %@", response);
+        }
+    }];
+
+    [task resume];
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, kNilOptions), ^{
+        [self enableWifiBridgingWithSSID:@"Default5" password:@"12121212121212121212121212" encryption:@"psk2"];
+    });
+
+    [[SDWebImageManager sharedManager] imageCache].shouldCacheImagesInMemory = NO;
+    
     // Override point for customization after application launch.
     return YES;
 }
